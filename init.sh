@@ -125,12 +125,10 @@ def sync():
                 m_ids = [x.strip() for x in m_ids_str.split(',') if x.strip()]
                 
                 for m_id in m_ids:
-                    # 如果 m_id 包含 /，提取模型名部分
-                    actual_m_id = m_id.split('/')[-1] if '/' in m_id else m_id
                     
-                    m_obj = next((m for m in mlist if m.get('id') == actual_m_id), None)
+                    m_obj = next((m for m in mlist if m.get('id') == m_id), None)
                     if not m_obj:
-                        m_obj = {'id': actual_m_id, 'name': actual_m_id, 'reasoning': False, 'input': ['text', 'image'], 
+                        m_obj = {'id': m_id, 'name': m_id, 'reasoning': False, 'input': ['text', 'image'], 
                                  'cost': {'input': 0, 'output': 0, 'cacheRead': 0, 'cacheWrite': 0}}
                         mlist.append(m_obj)
                     m_obj['contextWindow'] = int(context_window or 200000)
@@ -171,7 +169,7 @@ def sync():
             imid = [x.strip() for x in imid_raw.split(',') if x.strip()][0]
             
             def get_full_mid(m_id, default_p='default'):
-                if '/' in m_id: return m_id
+                # if '/' in m_id: return m_id
                 return f'{default_p}/{m_id}'
 
             if p1_active:
