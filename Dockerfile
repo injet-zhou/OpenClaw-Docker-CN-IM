@@ -65,9 +65,10 @@ RUN cd /home/node/.openclaw/extensions && \
 # 3. 最终配置
 USER root
 
-# 复制初始化脚本
+# 复制初始化脚本与配置同步脚本
 COPY ./init.sh /usr/local/bin/init.sh
-RUN chmod +x /usr/local/bin/init.sh
+COPY ./sync_config.py /usr/local/bin/sync_config.py
+RUN chmod +x /usr/local/bin/init.sh /usr/local/bin/sync_config.py
 
 # 设置环境变量
 ENV HOME=/home/node \
